@@ -20,19 +20,54 @@ html {
 }
 
 body {
+  position: relative;
+  overflow-x: hidden;
   min-height: 100vh;
   margin: 0;
   color: var(--ink);
   font-family: "Nunito", "Poppins", "Segoe UI", Arial, sans-serif;
   background:
-    radial-gradient(circle at 12% 12%, var(--pink) 0 12rem, transparent 12.5rem),
-    radial-gradient(circle at 88% 18%, var(--blue) 0 13rem, transparent 13.5rem),
-    radial-gradient(circle at 74% 86%, var(--mint) 0 14rem, transparent 14.5rem),
-    linear-gradient(135deg, #fff7fb 0%, #edf8ff 48%, #f1fff7 100%);
+    radial-gradient(circle at 12% 12%, rgba(255, 209, 229, 0.9) 0 12rem, transparent 12.5rem),
+    radial-gradient(circle at 88% 18%, rgba(191, 232, 255, 0.82) 0 13rem, transparent 13.5rem),
+    radial-gradient(circle at 74% 86%, rgba(201, 247, 223, 0.8) 0 14rem, transparent 14.5rem),
+    linear-gradient(120deg, #ff37c7 0%, #ffd8f2 32%, #dfe7ef 52%, #fff4fb 70%, #ff4bd1 100%);
+  background-size: 130% 130%;
+  animation: softBackground 12s ease-in-out infinite alternate;
+}
+
+body::before,
+body::after {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 0;
+  width: min(14vw, 150px);
+  pointer-events: none;
+  content: "";
+}
+
+body::before {
+  left: 0;
+  background:
+    linear-gradient(90deg, rgba(57, 255, 20, 0.82), rgba(255, 255, 255, 0.72), transparent),
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.95), transparent 32%);
+  filter: blur(1px);
+  animation: neonEdgeLeft 4.8s linear infinite;
+}
+
+body::after {
+  right: 0;
+  background:
+    linear-gradient(270deg, rgba(57, 255, 20, 0.82), rgba(255, 255, 255, 0.72), transparent),
+    radial-gradient(circle at 80% 68%, rgba(255, 255, 255, 0.95), transparent 32%);
+  filter: blur(1px);
+  animation: neonEdgeRight 4.8s linear infinite;
 }
 
 /* Contenedor principal con ancho flexible para moviles, tablets y escritorio */
 .page {
+  position: relative;
+  z-index: 1;
   width: min(92%, 820px);
   margin: 0 auto;
   padding: clamp(18px, 4vw, 48px) 0 24px;
@@ -49,9 +84,12 @@ body {
     inset 3px 3px 8px rgba(255, 255, 255, 0.68),
     inset -5px -5px 12px rgba(134, 145, 181, 0.12);
   backdrop-filter: blur(10px);
+  transform-style: preserve-3d;
+  animation: softFloat 5.8s ease-in-out infinite;
 }
 
 .page-header {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -59,6 +97,19 @@ body {
   margin-bottom: 28px;
   padding: clamp(22px, 4vw, 36px);
   border-radius: 32px;
+  overflow: hidden;
+}
+
+.page-header::after,
+.table-section::after,
+.credit-box::after {
+  position: absolute;
+  inset: -45%;
+  background: linear-gradient(110deg, transparent 38%, rgba(255, 255, 255, 0.6), rgba(221, 228, 235, 0.75), transparent 62%);
+  transform: translateX(-42%) rotate(8deg);
+  animation: cometSweep 5.5s linear infinite;
+  pointer-events: none;
+  content: "";
 }
 
 .title-group {
@@ -80,6 +131,10 @@ h1 {
   color: #37395d;
   font-size: clamp(1.75rem, 4vw, 3rem);
   line-height: 1.12;
+  text-shadow:
+    0 3px 0 rgba(255, 255, 255, 0.65),
+    0 12px 24px rgba(81, 75, 135, 0.18);
+  animation: letterFloat 3.8s ease-in-out infinite;
 }
 
 /* Boton claymorphism: forma suave, volumen y sombras internas/externas */
@@ -121,8 +176,11 @@ h1 {
 }
 
 .table-section {
+  position: relative;
   overflow: hidden;
+  margin-top: 26px;
   border-radius: 30px;
+  animation-delay: -1.4s;
 }
 
 .multiplication-table {
@@ -174,12 +232,15 @@ h1 {
 
 /* Pie de pagina con caja clay y logo alineado al texto */
 .page-footer {
+  position: relative;
+  z-index: 1;
   width: min(92%, 820px);
   margin: 0 auto;
   padding: 0 0 clamp(18px, 4vw, 42px);
 }
 
 .credit-box {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -191,6 +252,8 @@ h1 {
   border-radius: 22px;
   color: #4c4e70;
   font-weight: 900;
+  overflow: hidden;
+  animation-delay: -2.2s;
 }
 
 .footer-logo {
@@ -198,6 +261,195 @@ h1 {
   height: 44px;
   object-fit: contain;
   border-radius: 14px;
+  filter: drop-shadow(0 10px 12px rgba(89, 80, 128, 0.22));
+  animation: logoBounce 3.2s ease-in-out infinite,
+             pulpoPulse 1.6s ease-in-out infinite;
+}
+
+/* PULO PALPITA */
+@keyframes pulpoPulse {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 10px 12px rgba(89, 80, 128, 0.22));
+  }
+  50% {
+    transform: scale(1.15);
+    filter: drop-shadow(0 12px 16px rgba(255, 64, 128, 0.42));
+  }
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 10px 12px rgba(89, 80, 128, 0.22));
+  }
+}
+
+
+
+/* Texto solo para lectores de pantalla; no aparece visualmente en la interfaz */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Zona numerica con estilo 3D y senales visuales sin palabras dentro de la caja */
+.number-zone {
+  perspective: 900px;
+}
+
+.number-card {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 205px;
+  padding: clamp(22px, 5vw, 42px);
+  border: 2px solid rgba(57, 255, 20, 0.72);
+  border-radius: 34px;
+  background:
+    linear-gradient(145deg, rgba(255, 203, 231, 0.82), rgba(205, 244, 255, 0.76)),
+    rgba(255, 255, 255, 0.58);
+  box-shadow:
+    18px 18px 36px rgba(139, 59, 140, 0.24),
+    -16px -16px 34px rgba(255, 255, 255, 0.88),
+    inset 6px 6px 14px rgba(255, 255, 255, 0.72),
+    inset -8px -8px 18px rgba(186, 88, 172, 0.16),
+    0 0 26px rgba(57, 255, 20, 0.42);
+  transform: rotateX(4deg) rotateY(-4deg);
+  transform-style: preserve-3d;
+  overflow: hidden;
+  animation: floatingCard 4.4s ease-in-out infinite, neonPulse 2.7s ease-in-out infinite;
+}
+
+.number-card::before {
+  position: absolute;
+  inset: -60%;
+  background: linear-gradient(100deg, transparent 42%, rgba(255, 255, 255, 0.92), rgba(217, 225, 232, 0.9), transparent 58%);
+  transform: translateX(-44%) rotate(10deg);
+  animation: cometSweep 3.6s linear infinite;
+  content: "";
+}
+
+.number-card::after {
+  position: absolute;
+  inset: 12px;
+  border: 2px solid rgba(57, 255, 20, 0.78);
+  border-radius: 26px;
+  box-shadow: 0 0 22px rgba(57, 255, 20, 0.58), inset 0 0 18px rgba(255, 255, 255, 0.62);
+  animation: borderChase 2.8s linear infinite;
+  pointer-events: none;
+  content: "";
+}
+
+.number-input-wrap {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 430px);
+  transform: translateZ(42px);
+}
+
+.number-input-wrap::before {
+  position: absolute;
+  inset: -7px;
+  border-radius: 28px;
+  background: linear-gradient(90deg, #39ff14, #ffffff, #d7dde5, #39ff14);
+  background-size: 240% 100%;
+  filter: blur(1px);
+  animation: glowingFrame 2.2s linear infinite;
+  content: "";
+}
+
+.number-input {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 82px;
+  border: 0;
+  border-radius: 24px;
+  color: #4a255d;
+  background:
+    linear-gradient(145deg, rgba(255, 246, 252, 0.92), rgba(255, 194, 229, 0.88)),
+    #ffd1e5;
+  box-shadow:
+    inset 8px 8px 18px rgba(160, 75, 142, 0.2),
+    inset -9px -9px 20px rgba(255, 255, 255, 0.92),
+    0 18px 28px rgba(125, 66, 142, 0.22);
+  font-size: clamp(2.1rem, 8vw, 3.4rem);
+  font-weight: 900;
+  text-align: center;
+  letter-spacing: 0;
+  outline: none;
+  animation: inputFloat 3s ease-in-out infinite, inputGlow 2.4s ease-in-out infinite;
+}
+
+.number-input::placeholder {
+  color: rgba(74, 37, 93, 0.34);
+}
+
+.number-input:focus {
+  box-shadow:
+    inset 7px 7px 16px rgba(160, 75, 142, 0.24),
+    inset -10px -10px 22px rgba(255, 255, 255, 0.96),
+    0 20px 34px rgba(125, 66, 142, 0.28),
+    0 0 32px rgba(57, 255, 20, 0.44);
+}
+
+.floating-number {
+  position: absolute;
+  z-index: 1;
+  color: rgba(74, 37, 93, 0.44);
+  font-size: clamp(2.2rem, 7vw, 4.4rem);
+  font-weight: 900;
+  text-shadow: 0 8px 18px rgba(87, 64, 114, 0.18);
+  pointer-events: none;
+}
+
+.floating-number-one {
+  left: 13%;
+  top: -20%;
+  animation: numberDrop 4.6s ease-in-out infinite;
+}
+
+.floating-number-two {
+  right: 13%;
+  bottom: 11%;
+  animation: numberWriteFade 4.2s ease-in-out infinite;
+}
+
+.floating-number-three {
+  right: 28%;
+  top: 16%;
+  animation: numberPulseFade 3.6s ease-in-out infinite;
+}
+
+.number-message {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  z-index: 3;
+  margin: 0;
+  color: #df143c;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 900;
+  text-shadow: 0 2px 6px rgba(255, 255, 255, 0.75);
+  opacity: 0;
+  transform: translate(-50%, 18px) scale(0.82);
+  transform-origin: bottom center;
+  transition: opacity 0.32s ease, transform 0.42s cubic-bezier(0.2, 0.9, 0.25, 1.18);
+  pointer-events: none;
+}
+
+.number-message.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+
+.number-input.is-invalid {
+  animation: inputFloat 3s ease-in-out infinite, inputGlow 2.4s ease-in-out infinite, invalidShake 0.34s ease;
 }
 
 /* Ajustes para tablets y telefonos */
@@ -214,6 +466,11 @@ h1 {
 
   .test-button {
     width: 100%;
+  }
+
+  .number-card {
+    min-height: 190px;
+    transform: rotateX(3deg) rotateY(-2deg);
   }
 }
 
@@ -248,5 +505,268 @@ h1 {
     justify-content: space-between;
     padding: 12px 14px;
     font-size: 0.95rem;
+  }
+
+  .number-card {
+    min-height: 178px;
+    padding: 22px 16px 46px;
+    border-radius: 26px;
+  }
+
+  .number-input {
+    min-height: 72px;
+    border-radius: 20px;
+  }
+
+  .number-message {
+    width: 100%;
+    text-align: center;
+    bottom: 14px;
+  }
+}
+
+@keyframes softBackground {
+  0% {
+    background-position: 0% 35%;
+  }
+
+  100% {
+    background-position: 100% 65%;
+  }
+}
+
+@keyframes neonEdgeLeft {
+  0% {
+    transform: translateX(-30%) scaleY(1);
+    opacity: 0.62;
+  }
+
+  50% {
+    transform: translateX(18%) scaleY(1.03);
+    opacity: 0.96;
+  }
+
+  100% {
+    transform: translateX(-30%) scaleY(1);
+    opacity: 0.62;
+  }
+}
+
+@keyframes neonEdgeRight {
+  0% {
+    transform: translateX(30%) scaleY(1);
+    opacity: 0.62;
+  }
+
+  50% {
+    transform: translateX(-18%) scaleY(1.03);
+    opacity: 0.96;
+  }
+
+  100% {
+    transform: translateX(30%) scaleY(1);
+    opacity: 0.62;
+  }
+}
+
+@keyframes cometSweep {
+  0% {
+    transform: translateX(-48%) rotate(10deg);
+  }
+
+  100% {
+    transform: translateX(48%) rotate(10deg);
+  }
+}
+
+@keyframes softFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotateX(0deg);
+  }
+
+  50% {
+    transform: translateY(-7px) rotateX(1.2deg);
+  }
+}
+
+@keyframes letterFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes logoBounce {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+
+  50% {
+    transform: translateY(-6px) rotate(3deg);
+  }
+}
+
+@keyframes floatingCard {
+  0%,
+  100% {
+    transform: translateY(0) rotateX(4deg) rotateY(-4deg);
+  }
+
+  50% {
+    transform: translateY(-12px) rotateX(2deg) rotateY(4deg);
+  }
+}
+
+@keyframes neonPulse {
+  0%,
+  100% {
+    box-shadow:
+      18px 18px 36px rgba(139, 59, 140, 0.24),
+      -16px -16px 34px rgba(255, 255, 255, 0.88),
+      inset 6px 6px 14px rgba(255, 255, 255, 0.72),
+      inset -8px -8px 18px rgba(186, 88, 172, 0.16),
+      0 0 20px rgba(57, 255, 20, 0.36);
+  }
+
+  50% {
+    box-shadow:
+      22px 22px 42px rgba(139, 59, 140, 0.28),
+      -18px -18px 38px rgba(255, 255, 255, 0.94),
+      inset 7px 7px 16px rgba(255, 255, 255, 0.78),
+      inset -9px -9px 20px rgba(186, 88, 172, 0.18),
+      0 0 36px rgba(57, 255, 20, 0.72);
+  }
+}
+
+@keyframes borderChase {
+  0% {
+    box-shadow: 0 0 14px rgba(57, 255, 20, 0.48), inset 0 0 14px rgba(255, 255, 255, 0.48);
+  }
+
+  50% {
+    box-shadow: 0 0 28px rgba(255, 255, 255, 0.88), inset 0 0 24px rgba(57, 255, 20, 0.68);
+  }
+
+  100% {
+    box-shadow: 0 0 14px rgba(57, 255, 20, 0.48), inset 0 0 14px rgba(255, 255, 255, 0.48);
+  }
+}
+
+@keyframes glowingFrame {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 240% 50%;
+  }
+}
+
+@keyframes inputFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes inputGlow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes numberDrop {
+  0% {
+    transform: translateY(-40px) rotate(-8deg);
+    opacity: 0;
+  }
+
+  42% {
+    transform: translateY(126px) rotate(6deg);
+    opacity: 0.78;
+  }
+
+  72%,
+  100% {
+    transform: translateY(148px) rotate(6deg);
+    opacity: 0;
+  }
+}
+
+@keyframes numberWriteFade {
+  0%,
+  28% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+
+  52% {
+    clip-path: inset(0 0 0 0);
+    opacity: 0.78;
+  }
+
+  100% {
+    clip-path: inset(0 0 0 0);
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+}
+
+@keyframes numberPulseFade {
+  0%,
+  100% {
+    transform: scale(0.86);
+    opacity: 0;
+  }
+
+  44% {
+    transform: scale(1.14);
+    opacity: 0.55;
+  }
+}
+
+@keyframes invalidShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-6px);
+  }
+
+  75% {
+    transform: translateX(6px);
+  }
+}
+
+/* @media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+} */
+@media (max-width: 480px) {
+  .footer-logo {
+    animation: pulpoPulse 2s ease-in-out infinite; /* más lento en móvil */
   }
 }

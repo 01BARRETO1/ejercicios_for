@@ -1,5 +1,5 @@
 //️ PARTE 5: PRIMER CONTACTO CON JAVASCRIPT 
-function generarTabla(){
+/* function generarTabla(){
     let contenedorhTML=document.getElementById("html");
     
     let contenido="";
@@ -17,4 +17,100 @@ function generarTabla(){
         "<img src='octopus.png' alt='Logo octopus' class='footer-logo'></div></footer></body></html>"
         contenedorhTML.innerHTML=contenido;
     }
+} */
+
+function generarTabla() {
+    let contenido = ""
+    // numero de la caja de texto
+    let txtNumero = document.getElementById("numberInput");
+    let enteroTxt = txtNumero.value;
+    let numero = parseInt(enteroTxt);
+    //Titulo
+    let tituloHtml = document.getElementById("titulo");
+    let title1 = "Matem&aacute;tica b&aacute;sica";
+    tituloHtml.innerHTML = "<div class='title-group'> <p class='eyebrow'>" + title1 + "</p> <h1 id='table-title'></h1>"
+    let numeroTabla = document.getElementById("table-title");
+    numeroTabla.innerHTML = "Tabla de multiplicar del " + numero;
+    //Recuperar Tabla
+    let operacionResultado1 = document.getElementById("operacionResultado");
+    operacionResultado1.innerHTML = "<tr><th scope = 'col'>Operaci&oacute;n</th>"+"<th scope = 'col'> Resultado</th> </tr>"   
+ 
+    let tablaNumero = document.getElementById("tablas");
+    for (let i = 1; i <= 13; i++) {
+        let num = numero * i;
+        let resultado = num
+        console.log("tabla del " + numero);
+        contenido += "<tr> <td>" + numero + "x" +
+            i +
+            "</td> <td>"
+            + resultado +
+            "</td> </tr>";
+        tablaNumero.innerHTML = contenido;
+    }
+}
+//VALIDACIONES
+
+//mensajes animados 
+const input = document.getElementById("numberInput");
+const message = document.getElementById("numberMessage");
+
+input.addEventListener("input", (e) => {
+  // limpiar caracteres no numéricos
+  input.value = input.value.replace(/[^0-9]/g, "");
+
+  // si está vacío, mostrar error
+  if (input.value === "") {
+    input.classList.add("is-invalid");
+    message.classList.add("is-visible");
+    message.textContent = "- ingrese un número";
+  } else {
+    input.classList.remove("is-invalid");
+    message.classList.remove("is-visible");
+  }
+});
+
+//SIN NUMERO O CAMPO VACIO
+function generarTabla() {
+    const input = document.getElementById("numberInput");
+    const message = document.getElementById("numberMessage");
+    const numero = parseInt(input.value);
+
+    // Validación: si está vacío o no es número
+    if (isNaN(numero) || input.value === "") {
+        input.classList.add("is-invalid");
+        message.classList.add("is-visible");
+        message.textContent = "- ingrese un número válido";
+        return; // detener la función, no genera la tabla
+    } else {
+        input.classList.remove("is-invalid");
+        message.classList.remove("is-visible");
+    }
+
+    // Título
+    document.getElementById("titulo").innerHTML = `
+        <div class="title-group">
+            <p class="eyebrow">Matem&aacute;tica b&aacute;sica</p>
+            <h1 id="table-title">Tabla de multiplicar del ${numero}</h1>
+        </div>
+    `;
+
+    // Encabezado de tabla
+    document.getElementById("operacionResultado").innerHTML = `
+        <tr>
+            <th scope="col">Operaci&oacute;n</th>
+            <th scope="col">Resultado</th>
+        </tr>
+    `;
+
+    // Filas de la tabla
+    let filas = "";
+    for (let i = 1; i <= 13; i++) {
+        filas += `
+            <tr>
+                <td>${numero} x ${i}</td>
+                <td>${numero * i}</td>
+            </tr>
+        `;
+    }
+    document.getElementById("tablas").innerHTML = filas;
 }

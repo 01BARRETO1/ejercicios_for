@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="es" id="html">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tabla de Multiplicar del 3</title>
   <link rel="stylesheet" href="multiplicar.css">
-  <script src="multiplicar.js"></script>
+  <script src="multiplicar.js" defer></script>
 </head>
+
 <body>
   <!-- Contenedor principal de la pagina -->
   <main class="page">
@@ -14,62 +16,39 @@
       <!-- Boton solicitado en la parte superior -->
       <button class="test-button" type="button" onclick="generarTabla();">PROBAR</button>
 
-      <div class="title-group">
-        <p class="eyebrow">Matem&aacute;tica b&aacute;sica</p>
-        <h1 id="table-title">Tabla de multiplicar del 3</h1>
+      <div class="title-group" id="titulo">
+        <p class="eyebrow"></p>
+        <h1 id="table-title"></h1>
       </div>
     </header>
 
-    <section class="table-section" aria-labelledby="table-title">
-      <!-- Tabla con los resultados de multiplicar el numero 3 -->
+    <!-- Caja numerica con animaciones visuales para insinuar que se debe escribir un numero -->
+    <section class="number-zone" aria-labelledby="number-zone-title">
+      <h2 id="number-zone-title" class="visually-hidden">Ingrese un numero</h2>
+
+      <div class="number-card">
+        <span class="floating-number floating-number-one" aria-hidden="true">7</span>
+        <span class="floating-number floating-number-two" aria-hidden="true">3</span>
+        <span class="floating-number floating-number-three" aria-hidden="true">9</span>
+
+        <div class="number-input-wrap">
+          <input id="numberInput" class="number-input" type="number" min="0" step="1"
+            oninput="this.value = this.value.replace(/[^0-9]/g,'');" inputmode="numeric" pattern="[0-9]*"
+            autocomplete="off" placeholder="1   2   3" aria-describedby="numberMessage" aria-label="Ingrese un numero">
+        </div>
+
+        <p id="numberMessage" class="number-message" aria-live="polite">- ingrese un n&uacute;mero</p>
+      </div>
+    </section>
+
+    <section class="table-section" aria-labelledby="table-title" id="tabla">
+
       <table class="multiplication-table">
-        <thead>
-          <tr>
-            <th scope="col">Operaci&oacute;n</th>
-            <th scope="col">Resultado</th>
-          </tr>
+        <thead id="operacionResultado">
+
         </thead>
-        <tbody>
-          <tr>
-            <td>3 x 1</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>3 x 2</td>
-            <td>6</td>
-          </tr>
-          <tr>
-            <td>3 x 3</td>
-            <td>9</td>
-          </tr>
-          <tr>
-            <td>3 x 4</td>
-            <td>12</td>
-          </tr>
-          <tr>
-            <td>3 x 5</td>
-            <td>15</td>
-          </tr>
-          <tr>
-            <td>3 x 6</td>
-            <td>18</td>
-          </tr>
-          <tr>
-            <td>3 x 7</td>
-            <td>21</td>
-          </tr>
-          <tr>
-            <td>3 x 8</td>
-            <td>24</td>
-          </tr>
-          <tr>
-            <td>3 x 9</td>
-            <td>27</td>
-          </tr>
-          <tr>
-            <td>3 x 10</td>
-            <td>30</td>
-          </tr>
+        <tbody id="tablas">
+
         </tbody>
       </table>
     </section>
@@ -78,9 +57,11 @@
   <!-- Pie de pagina con creditos y logo -->
   <footer class="page-footer">
     <div class="credit-box">
-      <span>Creado por Carlos Barreto</span>
-      <img src="octopus.png" alt="Logo octopus" class="footer-logo">
+      <span>© 2026 Carlos Barreto</span>
+      <a href="https://wa.me/593987688143?text=Hola%20Carlos,%20quiero%20saber%20más%20de%20tus%20proyectos
+" target="_blank"><img src="octopus.png" alt="Logo octopus" class="footer-logo"></a>
     </div>
   </footer>
 </body>
+
 </html>
